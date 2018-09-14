@@ -32,6 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COMVIEWER));
             this.label1 = new System.Windows.Forms.Label();
             this.dgvPuertos = new System.Windows.Forms.DataGridView();
+            this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_LW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_MSJ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imgAuto = new System.Windows.Forms.ImageList(this.components);
             this.btnConfPort = new System.Windows.Forms.Button();
             this.imgBtn = new System.Windows.Forms.ImageList(this.components);
@@ -43,11 +48,6 @@
             this.b_stop = new System.Windows.Forms.Button();
             this.b_play = new System.Windows.Forms.Button();
             this.maintimer = new System.Windows.Forms.Timer(this.components);
-            this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_LW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_MSJ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPuertos)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -80,6 +80,41 @@
             this.dgvPuertos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPuertos.Size = new System.Drawing.Size(895, 324);
             this.dgvPuertos.TabIndex = 2;
+            // 
+            // col_ID
+            // 
+            this.col_ID.DataPropertyName = "Id";
+            this.col_ID.HeaderText = "id";
+            this.col_ID.Name = "col_ID";
+            this.col_ID.ReadOnly = true;
+            // 
+            // col_Nombre
+            // 
+            this.col_Nombre.DataPropertyName = "Nombre";
+            this.col_Nombre.HeaderText = "Nombre";
+            this.col_Nombre.Name = "col_Nombre";
+            this.col_Nombre.ReadOnly = true;
+            // 
+            // col_Status
+            // 
+            this.col_Status.DataPropertyName = "Status";
+            this.col_Status.HeaderText = "Estatus";
+            this.col_Status.Name = "col_Status";
+            this.col_Status.ReadOnly = true;
+            // 
+            // col_LW
+            // 
+            this.col_LW.DataPropertyName = "UltimaEscritura";
+            this.col_LW.HeaderText = "UltimaLectura";
+            this.col_LW.Name = "col_LW";
+            this.col_LW.ReadOnly = true;
+            // 
+            // col_MSJ
+            // 
+            this.col_MSJ.DataPropertyName = "mensaje";
+            this.col_MSJ.HeaderText = "Mensaje";
+            this.col_MSJ.Name = "col_MSJ";
+            this.col_MSJ.ReadOnly = true;
             // 
             // imgAuto
             // 
@@ -180,6 +215,7 @@
             this.b_stop.Size = new System.Drawing.Size(56, 56);
             this.b_stop.TabIndex = 8;
             this.b_stop.UseVisualStyleBackColor = true;
+            this.b_stop.Click += new System.EventHandler(this.b_stop_Click);
             // 
             // b_play
             // 
@@ -190,41 +226,7 @@
             this.b_play.Size = new System.Drawing.Size(56, 56);
             this.b_play.TabIndex = 8;
             this.b_play.UseVisualStyleBackColor = true;
-            // 
-            // col_ID
-            // 
-            this.col_ID.DataPropertyName = "Id";
-            this.col_ID.HeaderText = "id";
-            this.col_ID.Name = "col_ID";
-            this.col_ID.ReadOnly = true;
-            // 
-            // col_Nombre
-            // 
-            this.col_Nombre.DataPropertyName = "Nombre";
-            this.col_Nombre.HeaderText = "Nombre";
-            this.col_Nombre.Name = "col_Nombre";
-            this.col_Nombre.ReadOnly = true;
-            // 
-            // col_Status
-            // 
-            this.col_Status.DataPropertyName = "Status";
-            this.col_Status.HeaderText = "Estatus";
-            this.col_Status.Name = "col_Status";
-            this.col_Status.ReadOnly = true;
-            // 
-            // col_LW
-            // 
-            this.col_LW.DataPropertyName = "UltimaEscritura";
-            this.col_LW.HeaderText = "UltimaLectura";
-            this.col_LW.Name = "col_LW";
-            this.col_LW.ReadOnly = true;
-            // 
-            // col_MSJ
-            // 
-            this.col_MSJ.DataPropertyName = "mensaje";
-            this.col_MSJ.HeaderText = "Mensaje";
-            this.col_MSJ.Name = "col_MSJ";
-            this.col_MSJ.ReadOnly = true;
+            this.b_play.Click += new System.EventHandler(this.b_play_Click);
             // 
             // COMVIEWER
             // 
