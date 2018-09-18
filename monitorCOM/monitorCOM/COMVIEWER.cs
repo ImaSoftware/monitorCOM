@@ -18,45 +18,51 @@ namespace monitorCOM
         DataTable puertosView;
         class easyPort
         {
-           
-           
             public delegate void ActualizarEventHandler(Object sender);
             public event ActualizarEventHandler Actualizar;
             public int id = -1;
-            public enum status { Error, Open, Closed }
+            public enum status { Undefined, Error, Open, Closed }
             public int baudrate = 2400;
             public string portName = "";
             public SerialPort spSoft;
             public DateTime ultWrite;
-            public status estado;
+            public status estado = status.Undefined;
             public string mesaje = "";
+            private bool leer;
+            private bool cerrar;
             public Timer timerTabla = new Timer();
             public BackgroundWorker pbw = new BackgroundWorker();
             public easyPort(int xid, string xName = "COM1", int xbaudRate = 2400) {
                 id = xid;
-                timerTabla.Interval= Convert.ToInt32(Properties.Settings.Default.tiempo);
-                timerTabla.Tick += new EventHandler (LeerTabla);
+                timerTabla.Interval = Convert.ToInt32(Properties.Settings.Default.tiempo);
+                timerTabla.Tick += new EventHandler(LeerTabla);
                 pbw.DoWork += new DoWorkEventHandler(miBw_DoWork);
                 pbw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(miBw_WorkComplete);
                 portName = xName;
-                spSoft = new SerialPort();
-                spSoft.PortName = xName;
-                spSoft.BaudRate = xbaudRate;
-                spSoft.Parity = Parity.None;
-                spSoft.DataBits = 8;
-                spSoft.StopBits = StopBits.One ;
-                spSoft.Handshake = Handshake.None;
-                spSoft.ReadTimeout = 500;
-                spSoft.WriteTimeout = 500;
+                baudrate = xbaudRate;
+                this.resetPort();
             }
             public void Play() {
                 timerTabla.Stop();
                 timerTabla.Interval = Convert.ToInt32(Properties.Settings.Default.tiempo);
                 timerTabla.Start();
             }
+            private void resetPort() {
+                this.estado = status.Undefined;
+                spSoft = new SerialPort();
+                spSoft.PortName = this.portName;
+                spSoft.BaudRate = this.baudrate;
+                spSoft.Parity = Parity.None;
+                spSoft.DataBits = 8;
+                spSoft.StopBits = StopBits.One;
+                spSoft.Handshake = Handshake.None;
+                spSoft.ReadTimeout = 500;
+                spSoft.WriteTimeout = 500;
+            }
             public void Stop()
             {
                 timerTabla.Stop();
+                this.closePort();
             }
             private void LeerTabla(Object sender, EventArgs e) {
                 if (pbw.IsBusy) { return; }
@@ -73,7 +79,7 @@ namespace monitorCOM
                 {
                     using (SqlConnection cn = new SqlConnection(miconnstr))
                     {
-                        string sqlLee = @"select ESTACION_R from MONITORCOM_C where ESTACION_W = @miMaquina and PUERTO = @portname and  Leer = cast(1 as bit)";
+                        string sqlLee = @"select ESTACION_R, w_timeout, invertir from MONITORCOM_C where ESTACION_W = @miMaquina and PUERTO = @portname and  Leer = cast(1 as bit)";
                         SqlCommand cmd = new SqlCommand(sqlLee, cn);
                         cmd.Parameters.Add("@miMaquina", SqlDbType.VarChar);
                         cmd.Parameters["@miMaquina"].Value = Environment.MachineName;
@@ -86,11 +92,40 @@ namespace monitorCOM
                         cn.Close();
                         if (dt.Rows.Count > 0)
                         {
-                            if (this.estado != status.Open)
-                                this.openPort();
-                            this.readPort();
                             decimal valor = 0;
-                            Decimal.TryParse(this.mesaje.Substring(1,8), out valor);
+                            bool salir = false;
+                            int i = 0;
+                            while (!salir) {
+                                try {
+                                    this.closePort();
+                                    this.resetPort();
+                                    if (this.estado != status.Open)
+                                        this.openPort();
+                                    this.readPort();
+                                    if (this.estado != status.Error && this.mesaje.Length == 15) {
+                                        //invertir el mensaje si así esta parametrizado 
+                                        string sarta = "";
+                                        bool xinv = (bool)dt.Rows[0]["invertir"];
+                                        if (xinv)
+                                        {
+                                            string xmed = new string(this.mesaje.Reverse().ToArray());
+                                            sarta = xmed.Substring(xmed.Length - 9, 8);
+                                        }
+                                        else
+                                        {
+                                            sarta = this.mesaje.Substring(1, 8);                                            
+                                        }
+                                        Decimal.TryParse(sarta, out valor);
+                                        salir = true;
+                                    }
+                                } catch (Exception ex) {
+                                    this.mesaje = ex.Message;
+                                    System.Threading.Thread.Sleep(1);
+                                    i += 1;
+                                    if (i > Convert.ToInt32(dt.Rows[0]["w_timeout"]))
+                                        salir = true;
+                                }
+                            }
                             foreach (DataRow dr in dt.Rows) {
                                 string sqlWrite = @"Update MONITORCOM_C set lectura = @val_leido, Leer = cast(0 as bit) where ESTACION_R = @estacion and ESTACION_W = @miMaquina and PUERTO = @portname and  Leer = cast(1 as bit)";
                                 cmd = new SqlCommand(sqlWrite, cn);
@@ -118,33 +153,29 @@ namespace monitorCOM
 
             }
 
-            public void readPort() {
+            public void readPort(bool cerrar=false) {
                 
                 if (this.estado != status.Open) {
                     this.mesaje = "El puerto no está Abierto";
                     return;
                 }
                 try
-                {
-                    try
                     {
-                        this.mesaje= spSoft.ReadLine();
-                        this.ultWrite = DateTime.Now;
-                        
+                        try
+                        {
+                           this.mesaje = spSoft.ReadLine();
+                                this.ultWrite = DateTime.Now;
+                         }
+                        catch (TimeoutException ex)
+                        {
+                            this.mesaje = ex.Message; this.estado = status.Error;
+                            throw ex;
+                        }
                     }
-                    catch (TimeoutException ex)
+                    catch (Exception ex)
                     {
                         this.mesaje = ex.Message; this.estado = status.Error;
-                        throw ex;
                     }
-                }
-                catch (Exception ex)
-                {
-                    this.mesaje = ex.Message; this.estado = status.Error;
-                    //this.closePort();
-                }
-               
-                
             }
             public void openPort()
             {
@@ -234,6 +265,8 @@ namespace monitorCOM
             {
                 sp.Play();
             }
+            lblRun.Visible = true;
+            lblStop.Visible = false;
         }
 
         private void b_stop_Click(object sender, EventArgs e)
@@ -242,6 +275,8 @@ namespace monitorCOM
             {
                 sp.Stop();
             }
+            lblRun.Visible = false;
+            lblStop.Visible = true;
         }
     }
 }

@@ -44,11 +44,13 @@
             this.btnClosePort = new System.Windows.Forms.Button();
             this.btnOpenPort = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.b_pause = new System.Windows.Forms.Button();
             this.b_stop = new System.Windows.Forms.Button();
             this.b_play = new System.Windows.Forms.Button();
             this.maintimer = new System.Windows.Forms.Timer(this.components);
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.lblRun = new System.Windows.Forms.Label();
+            this.lblStop = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPuertos)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -186,31 +188,24 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.b_pause);
+            this.groupBox1.BackColor = System.Drawing.Color.Black;
+            this.groupBox1.Controls.Add(this.lblStop);
+            this.groupBox1.Controls.Add(this.lblRun);
             this.groupBox1.Controls.Add(this.b_stop);
             this.groupBox1.Controls.Add(this.b_play);
-            this.groupBox1.Location = new System.Drawing.Point(12, 393);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(12, 396);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(193, 80);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Automático";
             // 
-            // b_pause
-            // 
-            this.b_pause.ImageKey = "s_pause.png";
-            this.b_pause.ImageList = this.imgAuto;
-            this.b_pause.Location = new System.Drawing.Point(68, 19);
-            this.b_pause.Name = "b_pause";
-            this.b_pause.Size = new System.Drawing.Size(56, 56);
-            this.b_pause.TabIndex = 9;
-            this.b_pause.UseVisualStyleBackColor = true;
-            // 
             // b_stop
             // 
             this.b_stop.ImageKey = "s_stop.png";
             this.b_stop.ImageList = this.imgAuto;
-            this.b_stop.Location = new System.Drawing.Point(130, 19);
+            this.b_stop.Location = new System.Drawing.Point(68, 18);
             this.b_stop.Name = "b_stop";
             this.b_stop.Size = new System.Drawing.Size(56, 56);
             this.b_stop.TabIndex = 8;
@@ -221,12 +216,43 @@
             // 
             this.b_play.ImageKey = "s_play.png";
             this.b_play.ImageList = this.imgAuto;
-            this.b_play.Location = new System.Drawing.Point(6, 19);
+            this.b_play.Location = new System.Drawing.Point(6, 18);
             this.b_play.Name = "b_play";
             this.b_play.Size = new System.Drawing.Size(56, 56);
             this.b_play.TabIndex = 8;
             this.b_play.UseVisualStyleBackColor = true;
             this.b_play.Click += new System.EventHandler(this.b_play_Click);
+            // 
+            // lblRun
+            // 
+            this.lblRun.AutoSize = true;
+            this.lblRun.BackColor = System.Drawing.Color.Black;
+            this.lblRun.ForeColor = System.Drawing.Color.Lime;
+            this.lblRun.Location = new System.Drawing.Point(130, 28);
+            this.lblRun.Name = "lblRun";
+            this.lblRun.Size = new System.Drawing.Size(52, 13);
+            this.lblRun.TabIndex = 8;
+            this.lblRun.Text = "Corriendo";
+            this.lblRun.Visible = false;
+            // 
+            // lblStop
+            // 
+            this.lblStop.AutoSize = true;
+            this.lblStop.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblStop.ForeColor = System.Drawing.Color.Red;
+            this.lblStop.Location = new System.Drawing.Point(130, 52);
+            this.lblStop.Name = "lblStop";
+            this.lblStop.Size = new System.Drawing.Size(50, 13);
+            this.lblStop.TabIndex = 8;
+            this.lblStop.Text = "Detenido";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Location = new System.Drawing.Point(5, 393);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(211, 90);
+            this.panel1.TabIndex = 8;
             // 
             // COMVIEWER
             // 
@@ -240,10 +266,12 @@
             this.Controls.Add(this.btnConfPort);
             this.Controls.Add(this.dgvPuertos);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "COMVIEWER";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPuertos)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,7 +287,6 @@
         private System.Windows.Forms.Button btnClosePort;
         private System.Windows.Forms.Button btnOpenPort;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button b_pause;
         private System.Windows.Forms.Button b_stop;
         private System.Windows.Forms.Button b_play;
         private System.Windows.Forms.Timer maintimer;
@@ -270,6 +297,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_LW;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_MSJ;
         private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.Label lblStop;
+        private System.Windows.Forms.Label lblRun;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
