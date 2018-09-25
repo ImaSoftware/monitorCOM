@@ -44,12 +44,12 @@
             this.btnClosePort = new System.Windows.Forms.Button();
             this.btnOpenPort = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblStop = new System.Windows.Forms.Label();
+            this.lblRun = new System.Windows.Forms.Label();
             this.b_stop = new System.Windows.Forms.Button();
             this.b_play = new System.Windows.Forms.Button();
             this.maintimer = new System.Windows.Forms.Timer(this.components);
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.lblRun = new System.Windows.Forms.Label();
-            this.lblStop = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPuertos)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -137,6 +137,7 @@
             this.btnConfPort.Text = "Configurar";
             this.btnConfPort.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnConfPort.UseVisualStyleBackColor = true;
+            this.btnConfPort.Click += new System.EventHandler(this.btnConfPort_Click);
             // 
             // imgBtn
             // 
@@ -201,6 +202,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Automático";
             // 
+            // lblStop
+            // 
+            this.lblStop.AutoSize = true;
+            this.lblStop.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblStop.ForeColor = System.Drawing.Color.Red;
+            this.lblStop.Location = new System.Drawing.Point(130, 52);
+            this.lblStop.Name = "lblStop";
+            this.lblStop.Size = new System.Drawing.Size(50, 13);
+            this.lblStop.TabIndex = 8;
+            this.lblStop.Text = "Detenido";
+            // 
+            // lblRun
+            // 
+            this.lblRun.AutoSize = true;
+            this.lblRun.BackColor = System.Drawing.Color.Black;
+            this.lblRun.ForeColor = System.Drawing.Color.Lime;
+            this.lblRun.Location = new System.Drawing.Point(130, 28);
+            this.lblRun.Name = "lblRun";
+            this.lblRun.Size = new System.Drawing.Size(52, 13);
+            this.lblRun.TabIndex = 8;
+            this.lblRun.Text = "Corriendo";
+            this.lblRun.Visible = false;
+            // 
             // b_stop
             // 
             this.b_stop.ImageKey = "s_stop.png";
@@ -223,28 +247,10 @@
             this.b_play.UseVisualStyleBackColor = true;
             this.b_play.Click += new System.EventHandler(this.b_play_Click);
             // 
-            // lblRun
+            // maintimer
             // 
-            this.lblRun.AutoSize = true;
-            this.lblRun.BackColor = System.Drawing.Color.Black;
-            this.lblRun.ForeColor = System.Drawing.Color.Lime;
-            this.lblRun.Location = new System.Drawing.Point(130, 28);
-            this.lblRun.Name = "lblRun";
-            this.lblRun.Size = new System.Drawing.Size(52, 13);
-            this.lblRun.TabIndex = 8;
-            this.lblRun.Text = "Corriendo";
-            this.lblRun.Visible = false;
-            // 
-            // lblStop
-            // 
-            this.lblStop.AutoSize = true;
-            this.lblStop.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblStop.ForeColor = System.Drawing.Color.Red;
-            this.lblStop.Location = new System.Drawing.Point(130, 52);
-            this.lblStop.Name = "lblStop";
-            this.lblStop.Size = new System.Drawing.Size(50, 13);
-            this.lblStop.TabIndex = 8;
-            this.lblStop.Text = "Detenido";
+            this.maintimer.Interval = 5000;
+            this.maintimer.Tick += new System.EventHandler(this.maintimer_Tick);
             // 
             // panel1
             // 
@@ -268,7 +274,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(946, 549);
+            this.MinimumSize = new System.Drawing.Size(946, 549);
             this.Name = "COMVIEWER";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.COMVIEWER_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPuertos)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

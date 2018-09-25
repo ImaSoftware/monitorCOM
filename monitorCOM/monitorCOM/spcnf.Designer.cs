@@ -32,20 +32,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cb_baud = new System.Windows.Forms.ComboBox();
+            this.cb_bits = new System.Windows.Forms.ComboBox();
+            this.cb_par = new System.Windows.Forms.ComboBox();
+            this.cb_parada = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cb_hs = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.readTO = new System.Windows.Forms.NumericUpDown();
+            this.writeTO = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.readTO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.writeTO)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -84,41 +84,71 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Bits de Parada";
             // 
-            // comboBox1
+            // cb_baud
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(103, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 4;
+            this.cb_baud.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_baud.FormattingEnabled = true;
+            this.cb_baud.Items.AddRange(new object[] {
+            "110",
+            "300",
+            "1200",
+            "2400",
+            "4800",
+            "9600",
+            "19200",
+            "38400",
+            "57600",
+            "115200",
+            "230400",
+            "460800",
+            "921600"});
+            this.cb_baud.Location = new System.Drawing.Point(103, 12);
+            this.cb_baud.Name = "cb_baud";
+            this.cb_baud.Size = new System.Drawing.Size(121, 21);
+            this.cb_baud.TabIndex = 1;
             // 
-            // comboBox2
+            // cb_bits
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(103, 49);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 4;
+            this.cb_bits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_bits.FormattingEnabled = true;
+            this.cb_bits.Items.AddRange(new object[] {
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.cb_bits.Location = new System.Drawing.Point(103, 49);
+            this.cb_bits.Name = "cb_bits";
+            this.cb_bits.Size = new System.Drawing.Size(121, 21);
+            this.cb_bits.TabIndex = 2;
             // 
-            // comboBox3
+            // cb_par
             // 
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(103, 86);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 4;
+            this.cb_par.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_par.FormattingEnabled = true;
+            this.cb_par.Items.AddRange(new object[] {
+            "Ninguno",
+            "Par ",
+            "Impar",
+            "Marca",
+            "Espacio"});
+            this.cb_par.Location = new System.Drawing.Point(103, 86);
+            this.cb_par.Name = "cb_par";
+            this.cb_par.Size = new System.Drawing.Size(121, 21);
+            this.cb_par.TabIndex = 3;
             // 
-            // comboBox4
+            // cb_parada
             // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(103, 123);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
-            this.comboBox4.TabIndex = 4;
+            this.cb_parada.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_parada.FormattingEnabled = true;
+            this.cb_parada.Items.AddRange(new object[] {
+            "ninguno",
+            "uno",
+            "dos",
+            "uno_y_medio"});
+            this.cb_parada.Location = new System.Drawing.Point(103, 123);
+            this.cb_parada.Name = "cb_parada";
+            this.cb_parada.Size = new System.Drawing.Size(121, 21);
+            this.cb_parada.TabIndex = 4;
             // 
             // label5
             // 
@@ -129,14 +159,19 @@
             this.label5.TabIndex = 5;
             this.label5.Text = "Handshake";
             // 
-            // comboBox5
+            // cb_hs
             // 
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(103, 160);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(121, 21);
-            this.comboBox5.TabIndex = 4;
+            this.cb_hs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_hs.FormattingEnabled = true;
+            this.cb_hs.Items.AddRange(new object[] {
+            "None",
+            "XOnXOff",
+            "RequestToSend",
+            "RequestToSendXOnXOff"});
+            this.cb_hs.Location = new System.Drawing.Point(103, 160);
+            this.cb_hs.Name = "cb_hs";
+            this.cb_hs.Size = new System.Drawing.Size(121, 21);
+            this.cb_hs.TabIndex = 5;
             // 
             // label6
             // 
@@ -156,25 +191,35 @@
             this.label7.TabIndex = 5;
             this.label7.Text = "Write Timeout";
             // 
-            // numericUpDown1
+            // readTO
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(103, 197);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(121, 20);
-            this.numericUpDown1.TabIndex = 6;
+            this.readTO.Location = new System.Drawing.Point(103, 197);
+            this.readTO.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.readTO.Name = "readTO";
+            this.readTO.Size = new System.Drawing.Size(121, 20);
+            this.readTO.TabIndex = 6;
             // 
-            // numericUpDown2
+            // writeTO
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(103, 234);
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.writeTO.Location = new System.Drawing.Point(103, 234);
+            this.writeTO.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.writeTO.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(121, 20);
-            this.numericUpDown2.TabIndex = 6;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.writeTO.Name = "writeTO";
+            this.writeTO.Size = new System.Drawing.Size(121, 20);
+            this.writeTO.TabIndex = 7;
+            this.writeTO.Value = new decimal(new int[] {
             100,
             0,
             0,
@@ -185,18 +230,20 @@
             this.button1.Location = new System.Drawing.Point(153, 277);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
+            this.button1.TabIndex = 9;
             this.button1.Text = "Regresar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(72, 277);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
+            this.button2.TabIndex = 8;
             this.button2.Text = "Guardar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // spcnf
             // 
@@ -205,16 +252,16 @@
             this.ClientSize = new System.Drawing.Size(241, 311);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.writeTO);
+            this.Controls.Add(this.readTO);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.comboBox5);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cb_hs);
+            this.Controls.Add(this.cb_parada);
+            this.Controls.Add(this.cb_par);
+            this.Controls.Add(this.cb_bits);
+            this.Controls.Add(this.cb_baud);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -224,8 +271,9 @@
             this.Name = "spcnf";
             this.ShowIcon = false;
             this.Text = "Configuración";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.spcnf_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.readTO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.writeTO)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -237,16 +285,16 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cb_baud;
+        private System.Windows.Forms.ComboBox cb_bits;
+        private System.Windows.Forms.ComboBox cb_par;
+        private System.Windows.Forms.ComboBox cb_parada;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox cb_hs;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown readTO;
+        private System.Windows.Forms.NumericUpDown writeTO;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
     }
